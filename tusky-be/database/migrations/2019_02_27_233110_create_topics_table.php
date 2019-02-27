@@ -42,5 +42,6 @@ class CreateTopicsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('topics');
+        Schema::dropIfExists('users_topics');
     }
 }
