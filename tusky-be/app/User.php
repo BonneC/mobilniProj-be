@@ -36,4 +36,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Returns all topics that the user is subscribed to
+     */
+    public function topics()
+    {
+        $this->belongsToMany(Topic::class, 'users_topics');
+    }
 }
