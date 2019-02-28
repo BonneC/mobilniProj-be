@@ -25,13 +25,13 @@ class TopicController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Topic  $topic
+     * @param  \App\Topic $topic
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Topic $topic)
+    public function store(Request $request, User $user, Topic $topic)
     {
-        $shop = Shop::find($shop_id);
-        $shop->products()->attach($product_id);
+        $user->topics()->attach($topic);
 
     }
 
