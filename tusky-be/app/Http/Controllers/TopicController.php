@@ -9,12 +9,24 @@ use Illuminate\Http\Request;
 class TopicController extends Controller
 {
     /**
+     * Retrieve all topics
+     *
+     * @return array of topics
+     */
+    public function index()
+    {
+        $topics = Topic::all();
+        return $topics;
+    }
+
+
+    /**
      * Retrieve topics for specified user
      *
      * @param User $user
      * @return array of topics
      */
-    public function index(User $user)
+    public function userIndex(User $user)
     {
         $topics = $user->topics;
         return $topics;
@@ -24,7 +36,7 @@ class TopicController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @param  \App\Topic $topic
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
@@ -38,7 +50,7 @@ class TopicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Topic  $topic
+     * @param  \App\Topic $topic
      * @return \Illuminate\Http\Response
      */
     public function show(Topic $topic)
@@ -50,8 +62,8 @@ class TopicController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Topic  $topic
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Topic $topic
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Topic $topic)
@@ -60,12 +72,13 @@ class TopicController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the topic of the specified user.
      *
-     * @param  \App\Topic  $topic
+     * @param  \App\User $user
+     * @param  \App\Topic $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function destroy(User $user, Topic $topic)
     {
         //
     }
