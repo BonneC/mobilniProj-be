@@ -17,7 +17,7 @@ class CreateTopicsTable extends Migration
          * Main topic table
          */
         Schema::create('topics', function (Blueprint $table) {
-            $table->bigIncrements('topic_id');
+            $table->bigIncrements('id');
             $table->string('title');
             $table->text('description');
             $table->timestamps();
