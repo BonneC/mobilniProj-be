@@ -44,4 +44,24 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Topic::class, 'users_topics')->withTimestamps();
     }
+
+    /**
+     * Returns the tasks attached to this user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'users_tasks')
+            ->withTimestamps()
+            ->withPivot('completed');
+    }
+
+    /**
+     * Return filtered tasks that are not marked as completed
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function uncompletedTasks()
+    {
+        return $this->tasks()->wherePivot('completed', true);
+    }
 }

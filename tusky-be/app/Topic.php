@@ -22,4 +22,9 @@ class Topic extends Model
     {
         return $this->belongsToMany(User::class, 'users_topics')->withTimestamps();
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }
