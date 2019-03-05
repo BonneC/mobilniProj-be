@@ -25,6 +25,8 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+        //TODO put validator and token
+
         $newUser = User::create([
             'username' => $request->json('username'),
             'email' => $request->json('email'),
@@ -67,7 +69,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //TODO
+        //TODO put validator
+
+        $user->username = $request->json('username');
+        $user->email = $request->json('email');
+        $user->password = $request->json('password');
+
+        if ($user->save())
+            return response()->json(['success' => true], 200);
+        return response()->json(['success' => false], 500);
     }
 
     /**

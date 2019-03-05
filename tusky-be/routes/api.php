@@ -16,3 +16,35 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+/**
+ * Routes for user CRUD.
+ */
+
+//get specific user
+Route::get('/user', 'UserController@index');
+//update user
+Route::put('/user', 'UserController@update');
+//register user
+Route::post('/user', 'UserController@create');
+
+
+/**
+ * Routes for task CRUD
+ */
+
+//get all topics
+Route::get('/topics', 'TopicController@index');
+
+//get all topics for user
+Route::get('/{user}/topics', 'TopicController@userIndex');
+
+//add new topic for user
+Route::post('/{user}/topics', 'TopicController@store');
+
+//delete topic with id for user
+Route::delete('/{user}/topics/{topic}', 'TopicController@destroy');
+
+
+//TODO tasks
