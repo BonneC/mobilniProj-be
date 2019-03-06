@@ -33,16 +33,10 @@ class UserController extends Controller
             'password' => bcrypt($request->json('password'))
         ]);
 
-        // get token to provide it for auto-login after sign-up
-        $credentials = request(['email', 'password']);
-        $token = auth()->attempt($credentials);
         // if creation is successful
         if ($newUser) {
             return response()->json([
-                'success' => true,
-                'access_token' => $token,
-                'expires_in' => auth()->factory()->getTTL() * 60
-            ], 201);
+                'success' => true], 201);
         }
 
 
@@ -67,13 +61,15 @@ class UserController extends Controller
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         //TODO put validator
 
+        $user = $request->user();
+
         $user->username = $request->json('username');
         $user->email = $request->json('email');
-        $user->password = $request->json('password');
+        $user->password = bcrypt($request->json('password'));
 
         if ($user->save())
             return response()->json(['success' => true], 200);

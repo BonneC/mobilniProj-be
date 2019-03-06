@@ -31,7 +31,7 @@ Route::post('/user', 'UserController@create');
 
 
 /**
- * Routes for task CRUD
+ * Routes for topics CRUD
  */
 
 //get all topics
@@ -41,10 +41,16 @@ Route::get('/topics', 'TopicController@index');
 Route::get('/{user}/topics', 'TopicController@userIndex');
 
 //add new topic for user
-Route::post('/{user}/topics', 'TopicController@store');
+Route::post('/{user}/{topic}', 'TopicController@store');
 
 //delete topic with id for user
 Route::delete('/{user}/topics/{topic}', 'TopicController@destroy');
 
 
 //TODO tasks
+
+/**
+ * Routes for tasks CRUD
+ */
+
+Route::get('/{user}/tasks', 'TaskController@index');

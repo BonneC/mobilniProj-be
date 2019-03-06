@@ -43,8 +43,10 @@ class TopicController extends Controller
      */
     public function store(Request $request, User $user, Topic $topic)
     {
+        //TODO
         $user->topics()->attach($topic);
 
+        return response()->json(['success' => true], 200);
     }
 
     /**
