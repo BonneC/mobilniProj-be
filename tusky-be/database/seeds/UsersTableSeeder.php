@@ -9,9 +9,15 @@ class UsersTableSeeder extends Seeder
 {
     public function generateRandomTaskIds()
     {
-        $taskList = range(0, Task::all()->count() - 1);
-        shuffle($taskList);
-        return array_slice($taskList, 0, 3);
+        $taskList = \Illuminate\Support\Arr::random(
+            Task::rootTasks()->get()->all(),
+            3
+        );
+        return [
+            $taskList[0]->id,
+            $taskList[1]->id,
+            $taskList[2]->id
+        ];
     }
 
     /**

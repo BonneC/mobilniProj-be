@@ -25,4 +25,12 @@ class Task extends Model
     {
         return $this->belongsToMany(User::class, 'users_tasks')->withTimestamps();
     }
+
+    /**
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public static function rootTasks()
+    {
+        return Task::where('super_task', null);
+    }
 }
