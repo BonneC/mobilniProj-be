@@ -52,5 +52,8 @@ Route::delete('/{user}/topics/{topic}', 'TopicController@destroy');
 /**
  * Routes for tasks CRUD
  */
+//all tasks for user
+Route::get('/{user}/tasks', 'TaskController@userIndex');
 
-Route::get('/{user}/tasks', 'TaskController@index');
+//all task topic
+Route::get('/{topic}/topics','TaskController@topicIndex');
