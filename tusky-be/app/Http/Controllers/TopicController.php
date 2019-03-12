@@ -82,6 +82,7 @@ class TopicController extends Controller
      */
     public function destroy(User $user, Topic $topic)
     {
-        //
+        $user->topics()->detach($topic);
+        return response()->json(['success' => true], 200);
     }
 }
