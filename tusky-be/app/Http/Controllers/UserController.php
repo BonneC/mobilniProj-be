@@ -84,6 +84,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->active = false;
+
+        if ($user->save())
+            return response()->json(['success' => true], 200);
+        return response()->json(['success' => false], 500);
     }
 }
