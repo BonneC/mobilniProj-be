@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use \Validator;
 
 class UserController extends Controller
 {
@@ -25,7 +26,17 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
-        //TODO put validator and token
+        //TODO put token
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|min:2|max:250',
+            'password' => 'required|string|min:8',
+            'email' => 'required|string|min:2|email'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
 
         $newUser = User::create([
             'username' => $request->json('username'),
@@ -44,17 +55,6 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -63,9 +63,17 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        //TODO put validator
-
         $user = $request->user();
+
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|min:2|max:250',
+            'password' => 'required|string|min:8',
+            'email' => 'required|string|min:2|email'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
 
         $user->username = $request->json('username');
         $user->email = $request->json('email');
