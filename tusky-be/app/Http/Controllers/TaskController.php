@@ -40,7 +40,7 @@ class TaskController extends Controller
      */
     public function topicIndex(Topic $topic)
     {
-        $tasks = $topic->tasks;
+        $tasks = $topic->rootTasks()->all();
         return $tasks;
     }
 

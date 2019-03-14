@@ -44,6 +44,10 @@ class UserController extends Controller
             'password' => bcrypt($request->json('password'))
         ]);
 
+        // get token to provide it for auto-login after sign-up
+        $credentials = request(['email', 'password']);
+        $token = auth()->attempt($credentials);
+
         // if creation is successful
         if ($newUser) {
             return response()->json([
@@ -66,9 +70,7 @@ class UserController extends Controller
         $user = $request->user();
 
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|min:2|max:250',
-            'password' => 'required|string|min:8',
-            'email' => 'required|string|min:2|email'
+            'username' => 'required|string|min:2|max:250'
         ]);
 
         if ($validator->fails()) {

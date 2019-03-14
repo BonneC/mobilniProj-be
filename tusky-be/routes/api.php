@@ -62,4 +62,4 @@ Route::delete('/user/{user}/topics/{topic}', 'TopicController@destroy');
 Route::get('/user/{user}/tasks', 'TaskController@userIndex');
 
 //all task topic
-Route::get('/user/{topic}/topics', 'TaskController@topicIndex');
+Route::get('/topic/{topic}/tasks', 'TaskController@topicIndex');
