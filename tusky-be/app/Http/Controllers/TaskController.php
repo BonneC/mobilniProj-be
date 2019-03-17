@@ -35,13 +35,33 @@ class TaskController extends Controller
     /**
      * Retrieve all tasks for topic
      *
+     * @param Request $request
      * @param \App\Topic $topic
      * @return array of tasks
      */
-    public function topicIndex(Topic $topic)
+    public function topicIndex(Request $request, Topic $topic)
     {
-        $tasks = $topic->rootTasks()->all();
-        return $tasks;
+        $user = $request->user();
+        $userTasks = $user->tasks()
+            ->where('super_task', null)
+            ->where('topic_id', $topic->id)
+            ->get()->all();
+
+        $userTasksIds = [];
+        $allTasks = [];
+
+        foreach ($userTasks as $userTask) {
+            array_push($allTasks, $userTask);
+            array_push($userTasksIds, $userTask->id);
+        }
+
+        foreach ($topic->tasks()->where('super_task', null)->get() as $task) {
+            if (!in_array($task->id, $userTasksIds)) {
+                array_push($allTasks, $task);
+            }
+        }
+
+        return $allTasks;
     }
 
     /**
@@ -69,12 +89,12 @@ class TaskController extends Controller
      * Retrieve task
      *
      * @param \App\User $user
-     * @param \App\Task $task
-     * @return task
+     * @param integer
+     * @return array
      */
-    public function show(User $user, Task $task)
+    public function show(User $user, int $task)
     {
-
+        return $user->getTaskInfo($task);
     }
 
     /**
