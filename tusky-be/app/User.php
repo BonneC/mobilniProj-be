@@ -74,15 +74,41 @@ class User extends Authenticatable implements JWTSubject
                 'message' => 'Task already exists.'
             ];
 
-        $this->tasks()->attach($task);
-        $subtasks = $task->subTasks();
+        $this->tasks()->attach($task->id);
+        $subtasks = $task->subTasks()->get();
 
         foreach ($subtasks as $subtask)
-            $this->tasks()->attach($subtask);
+            $this->tasks()->attach($subtask->id);
 
         return [
             'status' => 'true',
             'message' => 'sukses'
+        ];
+    }
+
+    public function removeTask(Task $task)
+    {
+        $this->tasks()->detach($task->id);
+    }
+
+    public function getTasks()
+    {
+        return $this->tasks()
+            ->where('super_task', null)
+            ->wherePivot('completed', false);
+    }
+
+    /**
+     * Returns assoc array with task and sub-tasks (with pivots)
+     * @param integer $task
+     * @return array assoc with task and subTasks
+     */
+    public function getTaskInfo(int $task)
+    {
+        $subTasks = $this->tasks()->where('super_task', $task)->get();
+        return [
+            'task' => $this->tasks()->find($task),
+            'subTasks' => $subTasks
         ];
     }
 
