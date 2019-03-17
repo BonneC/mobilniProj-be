@@ -32,40 +32,48 @@ class UsersTableSeeder extends Seeder
         $user->email = 'atanasmk16@gmail.com';
         $user->password = bcrypt('sotiegajle');
         $user->save();
+
         $user->topics()->attach([1, 2, 3]);
-        $user->tasks()->attach(
-            $this->generateRandomTaskIds()
-        );
+        $task_ids = $this->generateRandomTaskIds();
+        foreach ($task_ids as $task_id)
+            $user->addTask(Task::find($task_id));
+
 
         $user = new User();
         $user->username = Str::random(10);
         $user->email = Str::random('10') . '@gmail.com';
         $user->password = bcrypt('secret');
         $user->save();
+
         $user->topics()->attach([2, 3, 4]);
-        $user->tasks()->attach(
-            $this->generateRandomTaskIds()
-        );
+        $task_ids = $this->generateRandomTaskIds();
+        foreach ($task_ids as $task_id)
+            $user->addTask(Task::find($task_id));
+
 
         $user = new User();
         $user->username = Str::random(10);
         $user->email = Str::random('10') . '@gmail.com';
         $user->password = bcrypt('secret');
         $user->save();
+
         $user->topics()->attach([1]);
-        $user->tasks()->attach(
-            $this->generateRandomTaskIds()
-        );
+        $task_ids = $this->generateRandomTaskIds();
+        foreach ($task_ids as $task_id)
+            $user->addTask(Task::find($task_id));
+
 
         $user = new User();
         $user->username = Str::random(10);
         $user->email = Str::random('10') . '@gmail.com';
         $user->password = bcrypt('secret');
         $user->save();
+
         $user->topics()->attach([1, 4]);
-        $user->tasks()->attach(
-            $this->generateRandomTaskIds()
-        );
+        $task_ids = $this->generateRandomTaskIds();
+        foreach ($task_ids as $task_id)
+            $user->addTask(Task::find($task_id));
+
 
     }
 }

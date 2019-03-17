@@ -55,5 +55,11 @@ Route::delete('/user/{user}/topics/{topic}', 'TopicController@destroy');
 //all tasks for user
 Route::get('/user/{user}/tasks', 'TaskController@userIndex');
 
-//all task topic
-Route::get('/user/{topic}/topics','TaskController@topicIndex');
+//all tasks for topic
+Route::get('/topic/{topic}/tasks', 'TaskController@topicIndex');
+
+//get specific task with subtasks for user
+Route::get('/user/{user}/tasks/{task}', 'TaskController@show');
+
+//delete task with id for user
+Route::delete('/user/{user}/tasks/{task}', 'TaskController@destroy');

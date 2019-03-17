@@ -23,7 +23,7 @@ class TopicController extends Controller
     /**
      * Retrieve topics for specified user
      *
-     * @param User $user
+     * @param \App\User $user
      * @return array of topics
      */
     public function userIndex(User $user)

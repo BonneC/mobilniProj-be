@@ -64,4 +64,24 @@ class User extends Authenticatable
     {
         return $this->tasks()->wherePivot('completed', true);
     }
+
+    public function addTask(Task $task)
+    {
+        if ($this->tasks->contains($task))
+            return [
+                'status' => 'false',
+                'message' => 'Task already exists.'
+            ];
+
+        $this->tasks()->attach($task);
+        $subtasks = $task->subTasks();
+
+        foreach ($subtasks as $subtask)
+            $this->tasks()->attach($subtask);
+
+        return [
+            'status' => 'true',
+            'message' => 'sukses'
+        ];
+    }
 }
