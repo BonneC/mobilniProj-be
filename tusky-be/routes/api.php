@@ -13,9 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth' // adds /auth prefix on routes
+], function ($router) {
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
 });
+Route::post('/auth/login', 'AuthController@login');
 
 
 /**
@@ -55,6 +61,7 @@ Route::delete('/user/{user}/topics/{topic}', 'TopicController@destroy');
 //all tasks for user
 Route::get('/user/{user}/tasks', 'TaskController@userIndex');
 
+
 //all tasks for topic
 Route::get('/topic/{topic}/tasks', 'TaskController@topicIndex');
 
@@ -63,3 +70,4 @@ Route::get('/user/{user}/tasks/{task}', 'TaskController@show');
 
 //delete task with id for user
 Route::delete('/user/{user}/tasks/{task}', 'TaskController@destroy');
+

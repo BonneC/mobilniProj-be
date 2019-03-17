@@ -27,4 +27,13 @@ class Topic extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    /**
+     * Returns all root level tasks for the topic
+     * @return \Illuminate\Database\Eloquent\Collection Collection of all root level tasks
+     */
+    public function rootTasks()
+    {
+        return $this->tasks()->where('super_task', null)->get();
+    }
 }
