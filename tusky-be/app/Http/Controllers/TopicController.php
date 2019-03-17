@@ -32,6 +32,10 @@ class TopicController extends Controller
         return $topics;
     }
 
+    public function topicIndex(Topic $topic)
+    {
+        return $topic->tasks()->where('super_task')->get();
+    }
 
     /**
      * Store a newly created resource in storage.
