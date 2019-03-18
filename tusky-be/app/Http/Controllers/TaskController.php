@@ -45,7 +45,7 @@ class TaskController extends Controller
         $userTasks = $user->tasks()
             ->where('super_task', null)
             ->where('topic_id', $topic->id)
-            ->get()->all();
+        ->get()->all();
 
         $userTasksIds = [];
         $allTasks = [];
@@ -106,7 +106,7 @@ class TaskController extends Controller
      */
     public function destroy(User $user, Task $task)
     {
-        $user->tasks()->detach($task);
+        $user->removeTask($task);
         return response()->json(['success' => true], 200);
     }
 }

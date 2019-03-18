@@ -57,14 +57,6 @@ class User extends Authenticatable implements JWTSubject
             ->withPivot('completed');
     }
 
-    /**
-     * Return filtered tasks that are not marked as completed
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function uncompletedTasks()
-    {
-        return $this->tasks()->wherePivot('completed', true);
-    }
 
     public function addTask(Task $task)
     {
@@ -89,13 +81,22 @@ class User extends Authenticatable implements JWTSubject
     public function removeTask(Task $task)
     {
         $this->tasks()->detach($task->id);
+        $subtasks = $task->subTasks()->get();
+
+        foreach ($subtasks as $subtask)
+            $this->tasks()->detach($subtask->id);
+
+        return [
+            'status' => 'true',
+            'message' => 'sukses'
+        ];
     }
 
     public function getTasks()
     {
         return $this->tasks()
             ->where('super_task', null)
-            ->wherePivot('completed', false);
+            ->wherePivot('completed', false)->get();
     }
 
     /**
