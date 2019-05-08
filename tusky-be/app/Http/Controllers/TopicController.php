@@ -16,7 +16,7 @@ class TopicController extends Controller
     public function index()
     {
         $topics = Topic::all();
-        return $topics;
+        return response()->json(['status' => 'success', 'topic_list' => $topics]);
     }
 
 
@@ -29,15 +29,15 @@ class TopicController extends Controller
     public function userIndex(User $user)
     {
         $topics = $user->topics;
-        return $topics;
+        return response()->json(['status' => 'success', 'topic_list' => $topics]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Topic $topic
-     * @param  \App\User $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Topic $topic
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, User $user, Topic $topic)
@@ -51,7 +51,7 @@ class TopicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Topic $topic
+     * @param \App\Topic $topic
      * @return \Illuminate\Http\Response
      */
     public function show(Topic $topic)
@@ -63,8 +63,8 @@ class TopicController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Topic $topic
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Topic $topic
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Topic $topic)
@@ -75,8 +75,8 @@ class TopicController extends Controller
     /**
      * Remove the topic of the specified user.
      *
-     * @param  \App\User $user
-     * @param  \App\Topic $topic
+     * @param \App\User $user
+     * @param \App\Topic $topic
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user, Topic $topic)
