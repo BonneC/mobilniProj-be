@@ -45,7 +45,7 @@ class TaskController extends Controller
         $userTasks = $user->tasks()
             ->where('super_task', null)
             ->where('topic_id', $topic->id)
-        ->get()->all();
+            ->get()->all();
 
         $userTasksIds = [];
         $allTasks = [];
@@ -61,15 +61,15 @@ class TaskController extends Controller
             }
         }
 
-        return $allTasks;
+        return response()->json(['status' => 'success', 'task_list' => $allTasks], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Task $task
-     * @param  \App\User $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Task $task
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, User $user, Task $task)

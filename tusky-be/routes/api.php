@@ -60,14 +60,14 @@ Route::delete('/user/{user}/topics/{topic}', 'TopicController@destroy');
  */
 
 //all tasks for user
-Route::get('/user/{user}/tasks', 'TaskController@userIndex');
+Route::get('/user/{user}/tasks', 'TaskController@userIndex')->middleware('auth:api');
 
 //add task for user
-Route::post('/user/{user}/tasks/{task}','TaskController@store');
+Route::post('/user/{user}/tasks/{task}', 'TaskController@store');
 
 //TODO
 //update task for user
-Route::put('','');
+//Route::put('','');
 
 //all tasks for topic
 Route::get('/topic/{topic}/tasks', 'TaskController@topicIndex');
