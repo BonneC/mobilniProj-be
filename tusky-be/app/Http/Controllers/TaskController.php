@@ -108,9 +108,10 @@ class TaskController extends Controller
     public function getById(Request $request, Task $task)
     {
         $tasks = [];
+        $task->load('subTasks');
         array_push($tasks, $task);
 
-        foreach ($task->subTasks() as $subTask) {
+        foreach ($task->subTasks()->get() as $subTask) {
             array_push($tasks, $subTask);
         }
 
