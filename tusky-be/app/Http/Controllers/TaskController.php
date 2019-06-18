@@ -97,6 +97,15 @@ class TaskController extends Controller
         return $user->getTaskInfo($task);
     }
 
+    public function getById(Request $request, Task $task)
+    {
+        $task->load('subTasks');
+        return response()->json([
+            'success' => true,
+            'task' => $task
+        ], 200);
+    }
+
     /**
      *Delete task for user
      *
