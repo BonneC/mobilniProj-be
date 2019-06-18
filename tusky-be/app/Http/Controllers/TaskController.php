@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\User;
 use App\Topic;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -97,12 +98,25 @@ class TaskController extends Controller
         return $user->getTaskInfo($task);
     }
 
+    /**
+     * Retrieve single task by id
+     *
+     * @param Request $request
+     * @param Task $task
+     * @return JsonResponse
+     */
     public function getById(Request $request, Task $task)
     {
-        $task->load('subTasks');
+        $tasks = [];
+        array_push($tasks, $task);
+
+        foreach ($task->subTasks() as $subTask) {
+            array_push($tasks, $subTask);
+        }
+
         return response()->json([
             'success' => true,
-            'task' => $task
+            'task_list' => $tasks
         ], 200);
     }
 
