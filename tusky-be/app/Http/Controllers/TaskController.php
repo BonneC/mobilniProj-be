@@ -52,7 +52,6 @@ class TaskController extends Controller
         $allTasks = [];
 
         foreach ($userTasks as $userTask) {
-            array_push($allTasks, $userTask);
             array_push($userTasksIds, $userTask->id);
         }
 
