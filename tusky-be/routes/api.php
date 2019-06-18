@@ -78,4 +78,4 @@ Route::get('/user/{user}/tasks/{task}', 'TaskController@show');
 //delete task with id for user
 Route::delete('/user/{user}/tasks/{task}', 'TaskController@destroy');
 
-Route::get('/task/{task}', 'TaskController@getById');
+Route::get('/task/{task}', 'TaskController@getById')->middleware('auth:api');
