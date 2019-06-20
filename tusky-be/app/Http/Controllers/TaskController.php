@@ -30,7 +30,10 @@ class TaskController extends Controller
     public function userIndex(User $user)
     {
         $tasks = $user->tasks;
-        return $tasks;
+        return response()->json([
+            'success' => 'true',
+            'task_list' => $tasks
+        ], 200);
     }
 
     /**
@@ -94,7 +97,10 @@ class TaskController extends Controller
      */
     public function show(User $user, int $task)
     {
-        return $user->getTaskInfo($task);
+        return response()->json([
+            'success' => true,
+            'task_info' => $user->getTaskInfo($task)
+            ], 200);
     }
 
     /**
