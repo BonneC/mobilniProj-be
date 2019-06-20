@@ -97,10 +97,17 @@ class TaskController extends Controller
      */
     public function show(User $user, int $task)
     {
+        $task = $user->tasks()->find($task);
+        $subTasks = $task->subTasks()->get();
+
+        $taskList = [$task];
+        foreach ($subTasks as $subTask) {
+            array_push($taskList, $subTask);
+        }
         return response()->json([
             'success' => true,
-            'task_info' => $user->getTaskInfo($task)
-            ], 200);
+            'task_list' => $taskList
+        ], 200);
     }
 
     /**
