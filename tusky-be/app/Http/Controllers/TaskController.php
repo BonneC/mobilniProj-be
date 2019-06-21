@@ -7,6 +7,7 @@ use App\User;
 use App\Topic;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
@@ -40,7 +41,7 @@ class TaskController extends Controller
      * Retrieve all tasks for topic
      *
      * @param Request $request
-     * @param \App\Topic $topic
+     * @param Topic $topic
      * @return array of tasks
      */
     public function topicIndex(Request $request, Topic $topic)
@@ -70,10 +71,10 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Task $task
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Task $task
+     * @param User $user
+     * @return JsonResponse
      */
     public function store(Request $request, User $user, Task $task)
     {
@@ -91,7 +92,7 @@ class TaskController extends Controller
     /**
      * Retrieve task
      *
-     * @param \App\User $user
+     * @param User $user
      * @param integer
      * @return array
      */
@@ -133,11 +134,31 @@ class TaskController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @param User $user
+     * @param int $task
+     * @return JsonResponse
+     */
+    public function update(Request $request, User $user, int $task)
+    {
+        $taskObj = $request->user()->tasks()->find($task);
+        $taskObj->pivot->completed = $request->json('completed', false);
+        if ($taskObj->save()) {
+            return response()->json([
+                'success' => true
+            ], 200);
+        }
+        return response()->json([
+            'success' => false,
+        ], 500);
+    }
+
+    /**
      *Delete task for user
      *
-     * @param \App\User $user
-     * @param \App\Task $task
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @param Task $task
+     * @return Response
      */
     public function destroy(User $user, Task $task)
     {

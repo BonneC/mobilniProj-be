@@ -65,9 +65,8 @@ Route::get('/user/{user}/tasks', 'TaskController@userIndex')->middleware('auth:a
 //add task for user
 Route::post('/user/{user}/tasks/{task}', 'TaskController@store');
 
-//TODO
 //update task for user
-//Route::put('','');
+Route::put('/user/{user}/tasks/{task}','TaskController@update');
 
 //all tasks for topic
 Route::get('/topic/{topic}/tasks', 'TaskController@topicIndex');
