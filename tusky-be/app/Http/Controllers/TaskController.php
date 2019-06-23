@@ -103,6 +103,7 @@ class TaskController extends Controller
 
         $taskList = [$task];
         foreach ($subTasks as $subTask) {
+            $subTask = $user->tasks()->find($subTask->id);
             array_push($taskList, $subTask);
         }
         return response()->json([
