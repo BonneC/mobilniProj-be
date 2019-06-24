@@ -142,9 +142,11 @@ class TaskController extends Controller
      */
     public function update(Request $request, User $user, int $task)
     {
-        $taskObj = $request->user()->tasks()->find($task);
-        $taskObj->pivot->completed = $request->json('completed', false);
-        if ($taskObj->save()) {
+        $user = $request->user()->tasks()->find($task);
+        $status = $user->tasks()->updateExistingPivot($task, [
+            'completed' => $request->json('completed', false)
+        ]);
+        if ($status) {
             return response()->json([
                 'success' => true
             ], 200);
