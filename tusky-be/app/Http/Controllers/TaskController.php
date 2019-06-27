@@ -30,7 +30,11 @@ class TaskController extends Controller
      */
     public function userIndex(User $user)
     {
-        $tasks = $user->tasks;
+        $tasks = $user
+            ->tasks()
+            ->where('super_task', null)
+            ->orderByDesc('pivot_updated_at')
+            ->get();
         return response()->json([
             'success' => 'true',
             'task_list' => $tasks
